@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html ng-app="appUsuario">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module('appUsuario', []);
+
+        app.controller('criarconta-controller',
+            function ($scope, $http) {
+
+                //função para realizar o cadastro do usuario..
+                $scope.cadastrar = function () {
+
+                    $scope.mensagem = "Processando, aguarde.";
+
+                    //requisição para o serviço POST da api..
+                    $http.post('http://localhost:49692/api/usuario/criarconta',
+                        $scope.usuario)
+                        .then(function (d) {
+                            $scope.mensagem = d.data.Mensagem;
+                            $scope.usuario = {}; //vazio..
+                        })
+                        .catch(function (e) {
+                            //mensagem de erro..
+                            $scope.mensagem = e.data.Mensagem;
+                        });
+                };
+
+            });
+
+    </script>
+
+</head>
+<body class="container" ng-controller="criarconta-controller">
+
+    <h2>Criar conta de usuário</h2>
+    <a href="/index.html">Página inicial</a>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <label>Username:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="usuario.Username" />
+            <br />
+
+            <label>Email:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="usuario.Email" />
+            <br />
+            <label>Telefone:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="usuario.Telefone" />
+            <br />
+            <label>Senha de Acesso:</label>
+            <input type="password" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="usuario.Senha" />
+            <br />
+           
+            <button class="btn btn-success" ng-click="cadastrar()">
+                Criar Conta de Usuário
+            </button>
+            <br />
+            <br />
+
+            <strong>{{mensagem}}</strong>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html ng-app="appUsuario">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module('appPessoa', []);
+
+        app.controller('criarconta-controller',
+            function ($scope, $http) {
+
+                //função para realizar o cadastro do usuario..
+                $scope.cadastrar = function () {
+
+                    $scope.mensagem = "Processando, aguarde.";
+
+                    //requisição para o serviço POST da api..
+                    $http.post('http://localhost:49692/api/usuario/criarconta',
+                        $scope.usuario)
+                        .then(function (d) {
+                            $scope.mensagem = d.data.Mensagem;
+                            $scope.usuario = {}; //vazio..
+                        })
+                        .catch(function (e) {
+                            //mensagem de erro..
+                            $scope.mensagem = e.data.Mensagem;
+                        });
+                };
+
+            });
+
+    </script>
+
+</head>
+<body class="container" ng-controller="criarconta-controller">
+
+    <h2>Cadastrar Pessoa Física</h2>
+    <a href="/index.html">Página inicial</a>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-3">
+            <label>Dados Pessoais:</label>
+            <br />
+
+            <label>Nome:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Nome" />
+            <br />
+
+            <label>Sobrenome:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Sobrenome" />
+            <br />
+            <label>Data de Nascimento:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Telefone" />
+            <br />
+            <label>Email:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Email" />
+            <br />
+            <label>CPF:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Email" />
+            <br />
+            <label>RG:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="pessoa.Email" />
+            <br />
+            <br />
+
+
+            <br />
+            <label>Endereço:</label>
+            <br />
+            <label>Logradouro:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.Logradouro" />
+            <br />
+
+            <label>Numero:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.Numero" />
+            <br />
+            <label>CEP:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.CEP" />
+            <br />
+            <label>Complemento:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.Complemento" />
+            <br />
+            <label>Cidade:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.Cidade" />
+            <br />
+            <label>Estado:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="endereco.Estado" />
+            <br />
+            <br />
+            <label>Endereço:</label>
+            <br />
+            <label>Nome:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="contato.nome" />
+            <br />
+             
+            <label>Contato:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="contato.descontato" />
+            <br />
+            
+            <label>Tipo Contato:</label>
+            <input type="text" class="form-control"
+                   placeholder="Digite aqui"
+                   ng-model="contato.TipoContato" />
+            <br />
+
+            <br />
+            <button class="btn btn-success" ng-click="cadastrar()">
+                Salvar
+            </button>
+            <br />
+            <strong>{{mensagem}}</strong>
+
+        </div>
+    </div>
+
+</body>
+</html>
